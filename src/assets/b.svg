@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X7 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1699px" height="424px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 1703 425"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:#052431}
+    .fil2 {fill:#445E6A}
+    .fil4 {fill:white}
+    .fil1 {fill:#052431;fill-rule:nonzero}
+    .fil3 {fill:#445E6A;fill-rule:nonzero}
+    .fil5 {fill:white;fill-rule:nonzero}
+   ]]>
+  </style>
+ </defs>
+ <g id="Warstwa_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g>
+   <polygon class="fil0" points="1701,1 2,1 2,424 1701,424 "/>
+   <path id="1" class="fil1" d="M2 2l-1 -1 1 -1 1699 0 0 2 -1699 0zm-1 -1l0 -1 1 0 -1 1zm3 423l-2 1 -1 -1 0 -423 3 0 0 423zm-2 1l-1 0 0 -1 1 1zm1699 -2l2 1 -2 1 -1699 0 0 -2 1699 0zm2 1l0 1 -2 0 2 -1zm-3 -423l1 -1 2 1 0 423 -3 0 0 -423zm1 -1l2 0 0 1 -2 -1z"/>
+  </g>
+  <g>
+   <polygon class="fil2" points="2,188 1275,213 1701,2 1701,103 1275,259 "/>
+   <path id="1" class="fil3" d="M1275 211l1 3 -1 0 -1273 -25 0 -3 1273 25zm1 3l0 0 -1 0 1 0zm425 -213l2 1 -1 1 -426 211 -1 -2 426 -211zm0 0l2 -1 0 2 -2 -1zm2 102l-1 1 -2 -1 0 -101 3 0 0 101zm0 0l0 1 -1 0 1 -1zm-427 158l-1 0 0 -3 426 -156 1 2 -426 157zm0 0l0 0 -1 0 1 0zm-1274 -72l0 -3 0 0 1274 72 -1 3 -1273 -72z"/>
+  </g>
+  <g>
+   <polygon class="fil4" points="1,274 1275,424 1701,343 1701,103 1275,259 1,188 "/>
+   <path id="1" class="fil5" d="M1275 423l0 2 0 0 -1274 -150 0 -3 1274 151zm0 2l0 0 0 0 0 0zm426 -84l2 2 -1 1 -427 81 0 -2 426 -82zm2 2l0 1 -1 0 1 -1zm-3 -240l1 -1 2 1 0 240 -3 0 0 -240zm1 -1l2 -1 0 2 -2 -1zm-425 159l-1 0 0 -3 426 -156 1 2 -426 157zm0 0l0 0 -1 0 1 0zm-1275 -72l-1 -1 1 -2 1275 72 -1 3 -1274 -72zm-1 -1l0 -2 1 0 -1 2zm2 86l-1 1 -1 -1 0 -86 2 0 0 86zm-1 1l-1 0 0 -1 1 1z"/>
+  </g>
+ </g>
+</svg>
