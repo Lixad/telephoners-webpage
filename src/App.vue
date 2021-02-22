@@ -164,6 +164,12 @@ html{
   background-image: linear-gradient(#052431, #3d5e6b,#052431);
 }
 
+.error-msg{
+  padding: 2px 0;
+  font-size: 1.4em;
+  color: #E53935;
+}
+
 .p-b-100{
   padding-bottom: 100px;
 }
@@ -172,12 +178,20 @@ html{
   padding-bottom: 250px;
 }
 
+.p-b-1_15em{
+  padding-bottom: 1.15em;
+}
+
 .p-t-100{
   padding-top: 100px;
 }
 
 .p-r-20{
   padding-right: 20px;
+}
+
+.p-l-40{
+  padding-left: 40px;
 }
 
 .m-auto{
@@ -191,6 +205,10 @@ html{
 
 button:focus{
   outline: none;
+}
+
+.d-n{
+  display: none;
 }
 
 @media(max-width: 840px){

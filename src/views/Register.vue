@@ -5,28 +5,28 @@
     <ValidationObserver ref="registerform">
     <form novalidate="true" class="login-form p-b-250" @submit.prevent="onSubmit">
       <Validation-provider rules="required|alpha_dash" v-slot="{ errors }" class="login-form-field">
-        <input type="text" placeholder="Login" v-model="login"/>
-        <span>{{ errors[0] }}</span>
+        <input type="text" placeholder="Login" v-model="login" name="Login"/>
+        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
       </Validation-provider>
-      <Validation-provider rules="confirmed:password2|required" v-slot="{ errors }" class="login-form-field">
-        <input type="password" placeholder="Hasło" v-model="password"/>
-        <span>{{ errors[0] }}</span>
+      <Validation-provider rules="confirmed:password2|required" vid="password" v-slot="{ errors }" class="login-form-field">
+        <input type="password" placeholder="Hasło" v-model="password" name="Password"/>
+        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
       </Validation-provider>
-      <Validation-provider rules="required" vid="password2" v-slot="{ errors }" class="login-form-field">
-        <input type="password" placeholder="Powtórz hasło" v-model="password2"/>
-        <span>{{ errors[0] }}</span>
+      <Validation-provider rules="confirmed:password|required" vid="password2" v-slot="{ errors }" class="login-form-field">
+        <input type="password" placeholder="Powtórz hasło" v-model="password2" name="Confirm password"/>
+        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
       </Validation-provider>
       <Validation-provider rules="required|email" v-slot="{ errors }" class="login-form-field">
-        <input type="text" placeholder="Email" v-model="email"/>
-        <span>{{ errors[0] }}</span>
+        <input type="text" placeholder="Email" v-model="email" name="Email"/>
+        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
       </Validation-provider>
       <Validation-provider rules="required|alpha" v-slot="{ errors }" class="login-form-field">
-        <input type="text" placeholder="Imię" v-model="name"/>
-        <span>{{ errors[0] }}</span>
+        <input type="text" placeholder="Imię" v-model="name" name="Name"/>
+        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
       </Validation-provider>
       <Validation-provider rules="required|alpha" v-slot="{ errors }" class="login-form-field">
-        <input type="text" placeholder="Nazwisko" v-model="surname"/>
-        <span>{{ errors[0] }}</span>
+        <input type="text" placeholder="Nazwisko" v-model="surname" name="Surname"/>
+        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
       </Validation-provider>
       <button type="submit" class="shining-button button-login">
         ZAREJESTRUJ SIĘ
@@ -47,18 +47,32 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
-import {ValidationProvider, ValidationObserver} from 'vee-validate';
-import {extend} from 'vee-validate';
-import {required, email, numeric, is, confirmed, alpha, alpha_dash} from 'vee-validate/dist/rules';
+import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
+import {required, email, confirmed, alpha, alpha_dash} from 'vee-validate/dist/rules';
+import axios from 'axios';
+import baseUrl from '../modules/url';
+import { messages } from 'vee-validate/dist/locale/en.json';
 
-extend('required', required);
-extend('email', email);
-extend('numeric', numeric);
-extend('is', is);
-extend('confirmed', confirmed);
-extend('alpha', alpha);
-extend('alpha_dash', alpha_dash)
-
+extend('required',{ 
+  ...required,
+  message: messages.required
+});
+extend('email',{ 
+  ...email,
+  message: messages.email
+});
+extend('confirmed',{
+  ...confirmed,
+  message: messages.confirmed
+});
+extend('alpha',{
+  ...alpha,
+  message: messages.alpha
+});
+extend('alpha_dash',{
+  ...alpha_dash,
+  message: messages.alpha_dash
+})
 
 export default {
   name: 'Register',
@@ -84,33 +98,30 @@ export default {
         if (!success) {
           return;
         }
-
-        fetch('https://telephonersnew.ew.r.appspot.com/auth/register', {method: 'post',  
-            mode: 'cors', 
-            headers: {"Content-type": "application/json"},
-            body: JSON.stringify({username: this.login, password: this.password, name: this.name, surname: this.surname, email: this.email})
-          })
-          .then(
-            (response) => {
-              if (response.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                response);
-                return;
-            }
-
-            // Examine the text in the response
-            response.text().then((data) => {
-              console.log(data.status);
-              this.$router.push('/login');
-            });
+        axios.post(baseUrl + '/auth/register',
+          {
+            username: this.login,
+            password: this.password,
+            name: this.name,
+            surname: this.surname,
+            email: this.email
           }
         )
-        .catch((err) => {
-          console.log('Fetch Error :-S', err);
-        });
+        .then(res => {
+            if (res.status !== 200) {
+              console.log('Looks like there was a problem. Status Code: ' + res);
+              return;
+            }
+            console.log(res.status);
+            this.$router.push('/login');
+          }
+        )
+        .catch(err => {
+            console.log('Something went wrong: ', err);
+          }
+        )
       });
-    }
-      
+    }   
   }
 }
 
@@ -154,7 +165,7 @@ h3{
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  margin: 20px auto;
+  margin: 10px auto;
 }
 
 .button-login{
@@ -243,6 +254,36 @@ h3{
 .login{
   font-size: 1.2em;
   margin: 0;
+}
+
+@media(max-width: 1300px){
+  .login-form{
+    width: 60%;
+  }
+}
+
+@media(max-width: 840px){
+  .login-form{
+    width: 80%;
+  }
+
+  h3{
+    padding-top: 30px;
+  }
+
+  .p-b-250{
+    padding-bottom: 30px;
+  }
+}
+
+@media(max-width: 520px){
+  .login-form{
+    width: 95%;
+  }
+
+  .button-login{
+    font-size: 2.6em;
+  }
 }
 
 </style>

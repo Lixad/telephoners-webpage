@@ -1,34 +1,37 @@
 <template>
   <div>
     <Header></Header>
-    <form class="contact-form">
-      <div class="contact-form-field">
+    <ValidationObserver ref="contactform">
+    <form class="contact-form" novalidate="true" @submit.prevent="onSubmit">
+      <Validation-provider rules="required" v-slot="{ errors }" class="contact-form-field">
         <label for="topic">TEMAT*</label>
-        <span></span>
-        <input type="text" id="topic" placeholder="TEMAT" v-model="topic"/>
-      </div>
-      <div class="contact-form-field">
+        <input type="text" id="topic" name="Topic" placeholder="TEMAT" v-model="topic"/>
+        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
+      </Validation-provider>
+      <Validation-provider rules="required" v-slot="{ errors }" class="contact-form-field">
         <label for="content">TREŚĆ*</label>
-        <span></span>
-        <textarea id="content" rows="10" placeholder="TREŚĆ" v-model="content"/>
-      </div>
-      <div class="contact-form-field">
+        <textarea id="content" rows="10" placeholder="TREŚĆ" name="Content" v-model="content"/>
+        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
+      </Validation-provider>
+      <Validation-provider rules="required" v-slot="{ errors }" class="contact-form-field">
         <label for="email">EMAIL*</label>
-        <span></span>
-        <input type="email" id="email" placeholder="EMAIL" v-model="email"/>
-      </div>
-      <div class="contact-form-checkbox">
+        <input type="email" id="email" placeholder="EMAIL" name="Email" v-model="email"/>
+        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
+      </Validation-provider>
+      <Validation-provider :rules="{required: { allowFalse: false }}" v-slot="{ errors }" class="contact-form-checkbox">
         <label for="rodo">Akceptuję RODO*
-          <input type="checkbox" id="rodo" v-model="rodo"/>
+          <input type="checkbox" id="rodo" name="RODO" v-model="rodo"/>
           <span class="checkmark"></span>
         </label>
-      </div>
-      <div class="contact-form-checkbox">
+        <span class="error-msg p-l-40" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
+      </Validation-provider>
+      <Validation-provider :rules="{required: { allowFalse: false }}" v-slot="{ errors }" class="contact-form-checkbox">
         <label for="robot">Nie jestem robotem*
-          <input type="checkbox" id="robot" v-model="robot"/>
+          <input type="checkbox" id="robot" name="I am not a robot" v-model="robot"/>
           <span class="checkmark"></span>
         </label>
-      </div>
+        <span class="error-msg p-l-40" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
+      </Validation-provider>
       <div class="contact-form-checkbox">
         <label for="copy">Wyślij do mnie kopie
           <input type="checkbox" id="copy" v-model="copy"/>
@@ -42,6 +45,7 @@
         </svg>
       </button>
     </form>
+    </ValidationObserver>
     <Footer></Footer>
   </div>
 </template>
@@ -50,12 +54,24 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
+import {required} from 'vee-validate/dist/rules';
+import axios from 'axios';
+import baseUrl from '../modules/url.js';
+import { messages } from 'vee-validate/dist/locale/en.json';
+
+extend('required',{
+  ...required,
+  message: messages.required
+});
 
 export default {
   name: 'Contact',
   components: {
     Header,
-    Footer
+    Footer,
+    ValidationProvider,
+    ValidationObserver
   },
   data(){
     return {
@@ -65,6 +81,33 @@ export default {
       rodo: false,
       robot: false,
       copy: false
+    }
+  },
+  methods:{
+    onSubmit(){
+      this.$refs.contactform.validate().then(success => {
+        if (!success) {
+          return;
+        }
+        console.log('siema');
+        axios.post(baseUrl + '/auth/login',
+          {
+            username: this.login,
+            password: this.password
+          }
+        )
+        .then((res) => {
+          if (res.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' + res);
+            return;
+          }
+          this.$store.commit('login', res.data);
+          this.$router.push('/');
+        })
+        .catch(function(err) {
+          console.log('Fetch Error: Zjebalo sie', err);
+        });
+      }) 
     }
   }
 }
@@ -120,9 +163,10 @@ export default {
 .contact-form-checkbox{
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
-  margin: 20px auto;
+  margin: 10px auto;
 }
 
 .contact-form-checkbox label{
@@ -181,6 +225,30 @@ export default {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+@media(max-width: 840px){
+  .contact-form{
+    width: 90%;
+    padding-top: 40px;
+  }
+
+  .contact-form label{
+    font-size: 1.8em;
+  }
+
+  .checkmark{
+    height: 18px;
+    width: 18px;
+    left: 5px;
+  }
+
+  .contact-form-checkbox .checkmark:after {
+    left: 6px;
+    top: 3px;
+    width: 3px;
+    height: 8px;
+  }
 }
 
 </style>

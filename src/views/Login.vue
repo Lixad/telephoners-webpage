@@ -5,12 +5,12 @@
     <ValidationObserver ref="loginform">
     <form novalidate="true" class="login-form p-b-250" @submit.prevent="onSubmit">
       <Validation-provider rules="required" v-slot="{ errors }" class="login-form-field">
-        <input type="text" placeholder="Login" v-model="login"/>
-        <span>{{ errors[0] }}</span>
+        <input type="text" placeholder="Login" v-model="login" name="Login"/>
+        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
       </Validation-provider>
       <Validation-provider rules="required" v-slot="{ errors }" class="login-form-field">
-        <input type="password" placeholder="Hasło" v-model="password"/>
-        <span>{{ errors[0] }}</span>
+        <input type="password" placeholder="Hasło" v-model="password" name="Password"/>
+        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
       </Validation-provider>
       <div class="login-form-checkbox">
         <label for="save">Zapamiętaj mnie
@@ -40,13 +40,16 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
-import {ValidationProvider, ValidationObserver} from 'vee-validate';
-import {extend} from 'vee-validate';
+import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
 import {required} from 'vee-validate/dist/rules';
 import axios from 'axios';
 import baseUrl from '../modules/url';
+import { messages } from 'vee-validate/dist/locale/en.json';
 
-extend('required', required);
+extend('required', {
+  ...required,
+  message: messages.required
+});
 
 export default {
   name: 'Login',
@@ -130,7 +133,7 @@ h3{
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  margin: 20px auto;
+  margin: 10px auto;
 }
 
 .button-login{
@@ -213,6 +216,40 @@ h3{
 .register{
   font-size: 1.4em;
   margin: 0;
+}
+
+@media(max-width: 840px){
+  .login-form{
+    width: 70%;
+  }
+
+  h3{
+    padding-top: 30px;
+  }
+
+  .p-b-250{
+    padding-bottom: 30px;
+  }
+}
+
+@media(max-width: 520px){
+  .login-form{
+    width: 90%;
+  }
+  .login-form label{
+    font-size: 1.8em;
+  }
+  .checkmark{
+    height: 18px;
+    width: 18px;
+    left: 5px;
+  }
+  .login-form-checkbox .checkmark:after {
+    left: 6px;
+    top: 3px;
+    width: 3px;
+    height: 8px;
+  }
 }
 
 </style>
