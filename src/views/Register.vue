@@ -4,11 +4,11 @@
     <h3>Rejestracja</h3>
     <ValidationObserver ref="registerform">
     <form novalidate="true" class="login-form p-b-250" @submit.prevent="onSubmit">
-      <Validation-provider rules="required|alpha_dash" v-slot="{ errors }" class="login-form-field">
+      <Validation-provider rules="required|alpha_dash|min:4|max:16" v-slot="{ errors }" class="login-form-field">
         <input type="text" placeholder="Login" v-model="login" name="Login"/>
         <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
       </Validation-provider>
-      <Validation-provider rules="confirmed:password2|required" vid="password" v-slot="{ errors }" class="login-form-field">
+      <Validation-provider rules="confirmed:password2|required|min:4" vid="password" v-slot="{ errors }" class="login-form-field">
         <input type="password" placeholder="Hasło" v-model="password" name="Password"/>
         <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
       </Validation-provider>
@@ -48,7 +48,7 @@
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
-import {required, email, confirmed, alpha, alpha_dash} from 'vee-validate/dist/rules';
+import {required, email, confirmed, alpha, alpha_dash, min, max} from 'vee-validate/dist/rules';
 import axios from 'axios';
 import baseUrl from '../modules/url';
 import { messages } from 'vee-validate/dist/locale/en.json';
@@ -72,7 +72,15 @@ extend('alpha',{
 extend('alpha_dash',{
   ...alpha_dash,
   message: messages.alpha_dash
-})
+});
+extend('min',{
+  ...min,
+  message: messages.min
+});
+extend('max',{
+  ...max,
+  message: messages.max
+});
 
 export default {
   name: 'Register',

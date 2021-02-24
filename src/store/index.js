@@ -18,6 +18,10 @@ export default new Vuex.Store({
         login(state, loginData) {
             state.token = loginData.Token;
             state.username = loginData.Username;
+        },
+        logout(state) {
+            state.token = undefined;
+            state.username = undefined;
         }
     },
     actions: {},

@@ -16,11 +16,17 @@
       <div class="hamburger-menu"></div>
     </div>
     <nav>
-        <a href="/aboutus" title="" class="header-button">O nas</a>
-        <a href="/projects" title="" class="header-button">Projekty</a>
-        <a href="/cooperation" title="" class="header-button">Współpraca</a>
-        <a href="/contact" title="" class="header-button">Kontakt</a>
-        <a href="/login" title="" class="header-login">{{ this.$store.state.username ?  this.$store.state.username : 'zaloguj się'}}</a>
+      <a href="/posts" title="" class="header-button">Posty</a>
+      <a href="/projects" title="" class="header-button">Projekty</a>
+      <a href="/aboutus" title="" class="header-button">O nas</a>
+      <a href="/contact" title="" class="header-button">Kontakt</a>
+      <span class="header-login" @click="showLoggedMenu">
+        {{ loginText }}
+      </span>
+      <div class="logged-menu" :class="{'opacity-0': !isLoggedMenu}">
+        <a href="#" title="">Wyświetl mój profil</a>
+        <span class="logout" @click="logout">Logout</span>
+      </div>
     </nav>
   </div>
 </template>
@@ -32,10 +38,28 @@ export default {
   },
   data() {
     return {
-      isMenu: false
+      isMenu: false,
+      isLoggedMenu: false
+    }
+  },
+  computed: {
+    loginText: function(){
+      return this.$store.state.username ?  this.$store.state.username : 'zaloguj się'
     }
   },
   methods: {
+    showLoggedMenu(){
+      if(this.$store.state.username){
+        this.isLoggedMenu = !this.isLoggedMenu;
+        return
+      }
+      this.$router.push('/login');
+    },
+    logout(){
+      this.isLoggedMenu = false;
+      this.$store.commit('logout');
+      this.$router.push('/');
+    }
   }
 }
 </script>
@@ -102,6 +126,7 @@ export default {
   margin: 0 40px;
   border-bottom: 1px solid transparent;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 .header-login:hover{
@@ -110,7 +135,7 @@ export default {
 }
 
 .hamburger-container{
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   height: 40px;
@@ -122,7 +147,6 @@ export default {
 }
 
 .hamburger-menu{
-  display: none;
   height: 5px;
   width: 40px;
   background-color: #fff;
@@ -149,6 +173,40 @@ export default {
   }
 }
 
+.logged-menu{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #052431;
+  right: 0;
+  top: 100px;
+  padding: 40px;
+  color: #fff;
+  font-size: 2.4em;
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 1200;
+  opacity: 1;
+  transition: 0.3s;
+  box-shadow: 0 20px 18px rgb(0,0,0,0.5);
+  pointer-events: auto;
+  & a{
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+.logout{
+  padding: 15px;
+  cursor: pointer;
+}
+
+.opacity-0{
+  opacity: 0;
+  transition: 0.3s;
+  pointer-events: none;
+}
+
 @media (max-width: 1300px){
   nav{
     display: flex;
@@ -165,8 +223,8 @@ export default {
     z-index: 1000;
   }
 
-  .hamburger-menu{
-    display: block;
+  .hamburger-container{
+    display: flex;
   }
 
   .mobile-menu-show .hamburger-menu{

@@ -61,6 +61,7 @@
       </a>
       </div>
     </div>
+    <Cooperation></Cooperation>
     <Footer></Footer>
   </div>
 </template>
@@ -69,12 +70,14 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import Cooperation from "@/components/Cooperation.vue";
 
 export default {
   name: 'AboutUs',
   components: {
     Header,
-    Footer
+    Footer,
+    Cooperation
   }
 }
 </script>

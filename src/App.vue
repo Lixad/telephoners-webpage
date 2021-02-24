@@ -35,7 +35,7 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	line-height: 1;
+	line-height: 1.25;
   padding-top: 100px;
 }
 ol, ul {

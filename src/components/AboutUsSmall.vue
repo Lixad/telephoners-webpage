@@ -16,7 +16,7 @@
           <use xlink:href="#arrow"/>
         </svg>
       </a>
-  </div>
+    </div>
   </div>
 </template>
 

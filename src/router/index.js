@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Projects from '../views/Projects.vue'
-import Cooperation from '../views/Cooperation.vue'
+import Posts from '../views/Posts.vue'
 import Contact from '../views/Contact.vue'
 import Login from '../views/Login.vue'
 import History from '../views/History.vue'
@@ -31,9 +31,9 @@ const routes = [{
         component: Projects
     },
     {
-        path: '/cooperation',
-        name: 'Cooperation',
-        component: Cooperation
+        path: '/posts',
+        name: 'Posts',
+        component: Posts
     },
     {
         path: '/contact',
