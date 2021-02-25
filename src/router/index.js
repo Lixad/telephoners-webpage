@@ -8,6 +8,7 @@ import Login from '../views/Login.vue'
 import History from '../views/History.vue'
 import Management from '../views/Management.vue'
 import Register from '../views/Register.vue'
+import AddPost from '../views/AddPost.vue'
 
 Vue.use(VueRouter)
 
@@ -59,6 +60,11 @@ const routes = [{
         path: '/register',
         name: 'Register',
         component: Register
+    },
+    {
+        path: '/addpost',
+        name: 'AddPost',
+        component: AddPost
     },
 ]
 

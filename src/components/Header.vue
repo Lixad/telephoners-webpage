@@ -23,7 +23,7 @@
       <span class="header-login" @click="showLoggedMenu">
         {{ loginText }}
       </span>
-      <div class="logged-menu" :class="{'opacity-0': !isLoggedMenu}">
+      <div v-if="this.$store.state.username" class="logged-menu" :class="{'logged-menu-invisible': !isLoggedMenu}">
         <a href="#" title="">Wyświetl mój profil</a>
         <span class="logout" @click="logout">Logout</span>
       </div>
@@ -201,7 +201,7 @@ export default {
   cursor: pointer;
 }
 
-.opacity-0{
+.logged-menu-invisible{
   opacity: 0;
   transition: 0.3s;
   pointer-events: none;
@@ -221,6 +221,7 @@ export default {
     transition: 0.5s;
     position: fixed;
     z-index: 1000;
+    overflow: auto;
   }
 
   .hamburger-container{
@@ -256,6 +257,12 @@ export default {
   
   .header-login{
     padding: 15px 0px;
+  }
+
+  .logged-menu{
+    position: static;
+    box-shadow: none;
+    padding: 30px 0 0 0;
   }
 }
 

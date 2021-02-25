@@ -3,34 +3,34 @@
     <Header></Header>
     <h3>LOGOWANIE</h3>
     <ValidationObserver ref="loginform">
-    <form novalidate="true" class="login-form p-b-250" @submit.prevent="onSubmit">
-      <Validation-provider rules="required" v-slot="{ errors }" class="login-form-field">
-        <input type="text" placeholder="Login" v-model="login" name="Login"/>
-        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
-      </Validation-provider>
-      <Validation-provider rules="required" v-slot="{ errors }" class="login-form-field">
-        <input type="password" placeholder="Hasło" v-model="password" name="Password"/>
-        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
-      </Validation-provider>
-      <div class="login-form-checkbox">
-        <label for="save">Zapamiętaj mnie
-          <input type="checkbox" id="save" v-model="save"/>
-          <span class="checkmark"></span>
-        </label>
-      </div>
-      <button type="submit" class="shining-button button-login">
-        ZALOGUJ SIĘ
-        <svg class="arrow">
-          <use xlink:href="#arrow"/>
-        </svg>
-      </button>
-      <div class="register-container">
-        Nie masz jeszcze konta ? 
-        <a href="/register" title="#" class="register shining-button"> 
-          Zarejetruj się!
-        </a>
-      </div>
-    </form>
+      <form novalidate="true" class="login-form p-b-250" @submit.prevent="onSubmit">
+        <Validation-provider rules="required" v-slot="{ errors }" class="login-form-field">
+          <input type="text" placeholder="Login" v-model="login" name="Login"/>
+          <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
+        </Validation-provider>
+        <Validation-provider rules="required" v-slot="{ errors }" class="login-form-field">
+          <input type="password" placeholder="Hasło" v-model="password" name="Password"/>
+          <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
+        </Validation-provider>
+        <div class="login-form-checkbox">
+          <label for="save">Zapamiętaj mnie
+            <input type="checkbox" id="save" v-model="save"/>
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <button type="submit" class="shining-button button-login">
+          ZALOGUJ SIĘ
+          <svg class="arrow">
+            <use xlink:href="#arrow"/>
+          </svg>
+        </button>
+        <div class="register-container">
+          Nie masz jeszcze konta ? 
+          <a href="/register" title="#" class="register shining-button"> 
+            Zarejetruj się!
+          </a>
+        </div>
+      </form>
     </ValidationObserver>
     <Footer></Footer>
   </div>
