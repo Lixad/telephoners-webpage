@@ -25,6 +25,7 @@
       </span>
       <div v-if="this.$store.state.username" class="logged-menu" :class="{'logged-menu-invisible': !isLoggedMenu}">
         <a href="#" title="">Wyświetl mój profil</a>
+        <a href="/addpost" title="">Utwórz nowy post</a>
         <span class="logout" @click="logout">Logout</span>
       </div>
     </nav>
@@ -180,7 +181,7 @@ export default {
   background-color: #052431;
   right: 0;
   top: 100px;
-  padding: 40px;
+  padding: 25px 40px 40px;
   color: #fff;
   font-size: 2.4em;
   box-sizing: border-box;
@@ -191,6 +192,7 @@ export default {
   box-shadow: 0 20px 18px rgb(0,0,0,0.5);
   pointer-events: auto;
   & a{
+    padding-top: 15px;
     text-decoration: none;
     color: inherit;
   }

@@ -87,7 +87,7 @@ export default {
           this.$router.push('/');
         })
         .catch(function(err) {
-          console.log('Fetch Error: Zjebalo sie', err);
+          console.log('Zjebalo sie', err);
         });
       }) 
     }
