@@ -4,26 +4,29 @@
     <ValidationObserver ref="addpostform">
       <form novalidate="true" class="addpost-form p-b-250" @submit.prevent="onSubmit">
         <Validation-provider rules="required" v-slot="{ errors }" class="addpost-form-field">
-          <input type="text" placeholder="Tytuł" v-model="postTitle" name="Title"/>
+          <label for="Title">Tytuł</label>
+          <input type="text" placeholder="Tytuł" v-model="postTitle" id="Title" name="Title"/>
           <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
         </Validation-provider>
         <Validation-provider rules="required" v-slot="{ errors }" class="addpost-form-field">
-          <input type="text" placeholder="Tematyka posta" v-model="topic" name="topic"/>
+          <label for="topic">Tematyka posta</label>
+          <input type="text" placeholder="Tematyka posta" v-model="topic" id="topic" name="topic"/>
           <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
         </Validation-provider>
         <Validation-provider rules="required" v-slot="{ errors }" class="addpost-textarea">
-          <textarea rows="10" placeholder="Treść posta" v-model="content" name="Content"/>
+          <label for="Content">Treść posta</label>
+          <textarea rows="10" placeholder="Treść posta" v-model="content" name="Content" id="Content"/>
           <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
         </Validation-provider>
         <Validation-provider class="addpost-form-field-img" rules="image">
           <label for="mainPhoto">Główne zdjęcie</label>
-          <input type="file" name="mainPhoto" id="mainPhoto" accept="image/*" @change="handleFileChange($event)"/>
-          <span class="error-msg" :class="{'p-b-1_15em d-n' : this.mainPhoto}">Picture is required</span>
+          <input type="file" name="mainPhoto" id="mainPhoto" accept="image/*" @focus="activateMainPhotoError()" @change="handleFileChange($event)"/>
+          <span v-show="showMainPhotoError" class="error-msg" :class="{'p-b-1_15em d-n' : this.mainPhoto}">Picture is required</span>
         </Validation-provider>
         <Validation-provider class="addpost-form-field-img" rules="image">
           <label for="photos">Zdjęcia</label>
-          <input type="file" name="photos" id="photos" accept="image/*" multiple="true" @change="handleFilesChange($event)"/>
-          <span class="error-msg" :class="{'p-b-1_15em d-n' : this.galleries.length}">Picture is required</span>
+          <input type="file" name="photos" id="photos" accept="image/*" multiple="true" @focus="activateGalleryError()" @change="handleFilesChange($event)"/>
+          <span v-show="showGalleriesError" class="error-msg" :class="{'p-b-1_15em d-n' : this.galleries.length}">Picture is required</span>
         </Validation-provider>
         <button type="submit" class="shining-button button-addpost">
           Dodaj post
@@ -69,7 +72,9 @@ export default {
       content: '',
       date: new Date(),
       mainPhoto: undefined,
-      galleries: []
+      galleries: [],
+      showGalleriesError: false,
+      showMainPhotoError: false
     }
   },
   methods:{
@@ -79,9 +84,17 @@ export default {
     handleFilesChange(event){
       this.galleries = event.target.files;
     },
+    activateMainPhotoError(){
+      this.showMainPhotoError = true;
+    },
+    activateGalleryError(){
+      this.showGalleriesError = true;
+    },
     onSubmit(){
       this.$refs.addpostform.validate().then(success => {
         if (!success || !this.mainPhoto || !this.galleries.length) {
+          this.showMainPhotoError = true;
+          this.showGalleriesError = true;
           return;
         }
         const data = new FormData();
@@ -112,7 +125,7 @@ export default {
           console.log('Zjebalo sie', err);
         });
       }) 
-    }
+    },
   }
 }
 </script>
@@ -172,6 +185,10 @@ export default {
     padding: 10px;
     font-size: 2.4em;
     width: 100%;
+  }
+  &  label{
+    font-size: 3.4em;
+    margin-bottom: 15px;
   }
 }
 
