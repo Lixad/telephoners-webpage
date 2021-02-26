@@ -21,12 +21,12 @@
         <Validation-provider class="addpost-form-field-img" rules="image">
           <label for="mainPhoto">Główne zdjęcie</label>
           <input type="file" name="mainPhoto" id="mainPhoto" accept="image/*" @focus="activateMainPhotoError()" @change="handleFileChange($event)"/>
-          <span v-show="showMainPhotoError" class="error-msg" :class="{'p-b-1_15em d-n' : this.mainPhoto}">Picture is required</span>
+          <span v-show="showMainPhotoError" class="error-msg" :class="{'p-b-1_15em d-n' : this.mainfile}">Picture is required</span>
         </Validation-provider>
         <Validation-provider class="addpost-form-field-img" rules="image">
           <label for="photos">Zdjęcia</label>
           <input type="file" name="photos" id="photos" accept="image/*" multiple="true" @focus="activateGalleryError()" @change="handleFilesChange($event)"/>
-          <span v-show="showGalleriesError" class="error-msg" :class="{'p-b-1_15em d-n' : this.galleries.length}">Picture is required</span>
+          <span v-show="showGalleriesError" class="error-msg" :class="{'p-b-1_15em d-n' : this.galleryfiles.length}">Picture is required</span>
         </Validation-provider>
         <button type="submit" class="shining-button button-addpost">
           Dodaj post
@@ -71,18 +71,18 @@ export default {
       topic: '',
       content: '',
       date: new Date(),
-      mainPhoto: undefined,
-      galleries: [],
+      mainfile: undefined,
+      galleryfiles: [],
       showGalleriesError: false,
       showMainPhotoError: false
     }
   },
   methods:{
     handleFileChange(event){
-      this.mainPhoto = event.target.files[0];
+      this.mainfile = event.target.files[0];
     },
     handleFilesChange(event){
-      this.galleries = event.target.files;
+      this.galleryfiles = event.target.files;
     },
     activateMainPhotoError(){
       this.showMainPhotoError = true;
@@ -92,16 +92,16 @@ export default {
     },
     onSubmit(){
       this.$refs.addpostform.validate().then(success => {
-        if (!success || !this.mainPhoto || !this.galleries.length) {
+        if (!success || !this.mainfile || !this.galleryfiles.length) {
           this.showMainPhotoError = true;
           this.showGalleriesError = true;
           return;
         }
         const data = new FormData();
-        data.append('mainPhoto', this.mainPhoto);
-        data.append('Post',"content: '" + this.content + "',postName: '" + this.postTitle + "',topic: '" + this.topic + "',postDate: '" + this.date + "'");
-        const arrayKey = `galleries[]`;
-        this.galleries.forEach(v => {
+        data.append('mainfile', this.mainfile);
+        data.append('Post','{"content": "' + this.content + '","postName": "' + this.postTitle + '","topic": "' + this.topic + '","postDate": "' + this.date + '"}');
+        const arrayKey = `galleryfiles[]`;
+        this.galleryfiles.forEach(v => {
             data.append(arrayKey, v);
         });
         axios.post(baseUrl + '/posts/addpost',
@@ -125,7 +125,7 @@ export default {
           console.log('Zjebalo sie', err);
         });
       }) 
-    },
+    }
   }
 }
 </script>
