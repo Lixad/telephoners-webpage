@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header></Header>
+
     <ValidationObserver ref="contactform">
     <form class="contact-form" novalidate="true" @submit.prevent="onSubmit">
       <Validation-provider rules="required" v-slot="{ errors }" class="contact-form-field">
@@ -46,17 +46,13 @@
       </button>
     </form>
     </ValidationObserver>
-    <Footer></Footer>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
 import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
 import {required} from 'vee-validate/dist/rules';
-import axios from 'axios';
 import baseUrl from '../modules/url.js';
 import { messages } from 'vee-validate/dist/locale/en.json';
 
@@ -68,8 +64,6 @@ extend('required',{
 export default {
   name: 'Contact',
   components: {
-    Header,
-    Footer,
     ValidationProvider,
     ValidationObserver
   },

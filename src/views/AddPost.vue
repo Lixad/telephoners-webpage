@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header></Header>
     <ValidationObserver ref="addpostform">
       <form novalidate="true" class="addpost-form p-b-250" @submit.prevent="onSubmit">
         <Validation-provider rules="required" v-slot="{ errors }" class="addpost-form-field">
@@ -33,17 +32,13 @@
         </button>
       </form>
     </ValidationObserver>
-    <Footer></Footer>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
 import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
 import {required, image} from 'vee-validate/dist/rules';
-import axios from 'axios';
 import baseUrl from '../modules/url';
 import { messages } from 'vee-validate/dist/locale/en.json';
 
@@ -60,8 +55,6 @@ extend('image', {
 export default {
   name: 'AddPost',
   components: {
-    Header,
-    Footer,
     ValidationProvider,
     ValidationObserver
   },
@@ -70,7 +63,6 @@ export default {
       postTitle: '',
       topic: '',
       content: '',
-      date: new Date(),
       mainfile: undefined,
       galleryfiles: [],
       showGalleriesError: false,
@@ -99,8 +91,8 @@ export default {
         }
         const data = new FormData();
         data.append('mainfile', this.mainfile);
-        data.append('Post','{"content": "' + this.content + '","postName": "' + this.postTitle + '","topic": "' + this.topic + '","postDate": "' + this.date + '"}');
-        const arrayKey = `galleryfiles[]`;
+        data.append('Post','{"content": "' + this.content + '","postName": "' + this.postTitle + '","topic": "' + this.topic + '"}');
+        const arrayKey = `galleryfiles`;
         this.galleryfiles.forEach(v => {
             data.append(arrayKey, v);
         });
@@ -114,12 +106,11 @@ export default {
           }
         )
         .then((res) => {
-          if (res.status !== 200) {
+          if (res.status !== 201) {
             console.log('Looks like there was a problem. Status Code: ' + res);
             return;
           }
-          this.$store.commit('login', res.data);
-          this.$router.push('/');
+          this.$router.push('/posts');
         })
         .catch(function(err) {
           console.log('Zjebalo sie', err);

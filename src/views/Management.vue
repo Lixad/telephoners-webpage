@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header></Header>
     <div class="grad p-t-100 p-b-100">
       <div class="content">
         <h3>ZARZĄD KOŁA</h3>
@@ -86,21 +85,14 @@
         </div>
       </div>
     </div>
-    <Footer></Footer>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
 
 export default {
   name: 'Management',
-  components: {
-    Header,
-    Footer
-  }
 }
 </script>
 

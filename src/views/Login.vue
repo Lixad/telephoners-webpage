@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Header></Header>
     <h3>LOGOWANIE</h3>
     <ValidationObserver ref="loginform">
       <form novalidate="true" class="login-form p-b-250" @submit.prevent="onSubmit">
@@ -32,17 +31,13 @@
         </div>
       </form>
     </ValidationObserver>
-    <Footer></Footer>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Header from "@/components/Header.vue";
-import Footer from "@/components/Footer.vue";
 import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
 import {required} from 'vee-validate/dist/rules';
-import axios from 'axios';
 import baseUrl from '../modules/url';
 import { messages } from 'vee-validate/dist/locale/en.json';
 
@@ -54,8 +49,6 @@ extend('required', {
 export default {
   name: 'Login',
   components: {
-    Header,
-    Footer,
     ValidationProvider,
     ValidationObserver
   },
