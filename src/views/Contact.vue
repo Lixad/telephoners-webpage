@@ -53,7 +53,6 @@
 // @ is an alias to /src
 import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
 import {required} from 'vee-validate/dist/rules';
-import baseUrl from '../modules/url.js';
 import { messages } from 'vee-validate/dist/locale/en.json';
 
 extend('required',{
@@ -83,8 +82,7 @@ export default {
         if (!success) {
           return;
         }
-        console.log('siema');
-        axios.post(baseUrl + '/auth/login',
+        axios.post('/auth/login',
           {
             username: this.login,
             password: this.password
@@ -98,9 +96,6 @@ export default {
           this.$store.commit('login', res.data);
           this.$router.push('/');
         })
-        .catch(function(err) {
-          console.log('Fetch Error: Zjebalo sie', err);
-        });
       }) 
     }
   }

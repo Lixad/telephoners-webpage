@@ -45,7 +45,6 @@
 // @ is an alias to /src
 import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
 import {required, email, confirmed, alpha, alpha_dash, min, max} from 'vee-validate/dist/rules';
-import baseUrl from '../modules/url';
 import { messages } from 'vee-validate/dist/locale/en.json';
 
 extend('required',{ 
@@ -99,7 +98,7 @@ export default {
         if (!success) {
           return;
         }
-        axios.post(baseUrl + '/auth/register',
+        axios.post('/auth/register',
           {
             username: this.login,
             password: this.password,
@@ -115,10 +114,6 @@ export default {
             }
             console.log(res.status);
             this.$router.push('/login');
-          }
-        )
-        .catch(err => {
-            console.log('Something went wrong: ', err);
           }
         )
       });

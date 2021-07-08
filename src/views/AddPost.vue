@@ -39,7 +39,6 @@
 // @ is an alias to /src
 import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
 import {required, image} from 'vee-validate/dist/rules';
-import baseUrl from '../modules/url';
 import { messages } from 'vee-validate/dist/locale/en.json';
 
 extend('required', {
@@ -96,12 +95,11 @@ export default {
         this.galleryfiles.forEach(v => {
             data.append(arrayKey, v);
         });
-        axios.post(baseUrl + '/posts/addpost',
+        axios.post('/posts/addpost',
           data,
           {
             headers: {
               'Content-Type': 'multipart/form-data',
-              'Authorization': 'Bearer ' + this.$store.state.token
             }
           }
         )
@@ -110,11 +108,8 @@ export default {
             console.log('Looks like there was a problem. Status Code: ' + res);
             return;
           }
-          this.$router.push('/posts');
+          this.$router.push('/posts/0');
         })
-        .catch(function(err) {
-          console.log('Zjebalo sie', err);
-        });
       }) 
     }
   }

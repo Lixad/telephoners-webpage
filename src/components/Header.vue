@@ -16,7 +16,7 @@
       <div class="hamburger-menu"></div>
     </div>
     <nav>
-      <a href="/posts/0" title="" class="header-button">Posty</a>
+      <a href="/posts/page/0" title="" class="header-button">Posty</a>
       <a href="/projects" title="" class="header-button">Projekty</a>
       <a href="/aboutus" title="" class="header-button">O nas</a>
       <a href="/contact" title="" class="header-button">Kontakt</a>

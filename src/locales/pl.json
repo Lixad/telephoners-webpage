@@ -1,0 +1,10 @@
+{
+  "login" : {
+      "login": "Login",
+      "password": "Hasło",
+      "signIn": "Logowanie",
+      "loginRequired": "Pole login jest wymagane",
+      "passwordRequired": "Pole hasło jest wymagane",
+      "signInButton": "ZALOGUJ SIĘ"
+  }
+}

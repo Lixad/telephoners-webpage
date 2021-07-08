@@ -2,9 +2,9 @@
     <li class="post-container">
         <img class="post-main-photo" :src="props.data.mainPhoto.url"/>
         <div class="post-text-container">
-            <div class="post-title">
+            <a :href="'/posts/' + props.data.id" class="post-title">
                 Tytuł: {{props.data.postName}}
-            </div>
+            </a>
             <div class="post-topic">
                 Tematyka: {{props.data.topic}}
             </div>

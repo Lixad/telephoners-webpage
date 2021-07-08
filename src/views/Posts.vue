@@ -13,7 +13,6 @@
 <script>
 // @ is an alias to /src
 import Post from '../components/Post.vue';
-import baseUrl from '../modules/url';
 
 export default {
   name: 'Posts',
@@ -28,16 +27,10 @@ export default {
   methods:{
   },
   created() {
-    axios.get(baseUrl + '/posts/page/' + this.$route.params.page)
+    axios.get('/posts/page/' + this.$route.params.page)
     .then(res => {
-      if (res.status !== 200) {
-        console.log('Looks like there was a problem. Status Code: ' + res);
-        return;
-      }
       this.posts = res.data;
-    })
-    .catch(function (error) {
-      console.log(error);
+      console.log(res.data);
     })
   }
 }

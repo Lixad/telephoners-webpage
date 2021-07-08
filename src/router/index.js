@@ -9,6 +9,7 @@ import History from '../views/History.vue'
 import Management from '../views/Management.vue'
 import Register from '../views/Register.vue'
 import AddPost from '../views/AddPost.vue'
+import PostDetails from '../views/PostDetails.vue'
 
 Vue.use(VueRouter)
 
@@ -32,9 +33,14 @@ const routes = [{
         component: Projects
     },
     {
-        path: '/posts/:page',
+        path: '/posts/page/:page',
         name: 'Posts',
         component: Posts
+    },
+    {
+        path: '/posts/:id',
+        name: 'PostDetails',
+        component: PostDetails
     },
     {
         path: '/contact',

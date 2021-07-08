@@ -68,6 +68,16 @@ table {
 	border-spacing: 0;
 }
 
+button{
+  border: none;
+  border-radius: none;
+  background-color: transparent;
+}
+
+a{
+  text-decoration: none;
+}
+
 html{
   font-size: 10px;
   font-family: 'Montserrat';

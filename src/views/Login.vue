@@ -1,7 +1,29 @@
 <template>
   <div>
-    <h3>LOGOWANIE</h3>
-    <ValidationObserver ref="loginform">
+    <h3>{{ $t('login.signIn') }}</h3>
+    <el-form ref="loginForm" :model="loginForm" :rules="rules" class="login-form">
+      <el-form-item prop="login" class="w_100">
+        <el-input v-model="loginForm.login" :placeholder="$t('login.login')" />
+      </el-form-item>
+      <el-form-item prop="password" class="w_100">
+        <el-input type="password" v-model="loginForm.password" :placeholder="$t('login.password')" />
+      </el-form-item>
+      <el-form-item prop="saveMe">
+        <el-checkbox v-model="loginForm.saveMe" @change="changeSaveMeCookie" />
+      </el-form-item>
+       <el-button @click="onSubmit">{{ $t('login.signInButton') }}</el-button>
+    </el-form>
+    <div class="register-container">
+      Nie masz jeszcze konta ? 
+      <a href="/register" title="#" class="register shining-button"> 
+        Zarejetruj się!
+      </a>
+    </div>
+
+
+
+
+    <!-- <ValidationObserver ref="loginform">
       <form novalidate="true" class="login-form p-b-250" @submit.prevent="onSubmit">
         <Validation-provider rules="required" v-slot="{ errors }" class="login-form-field">
           <input type="text" placeholder="Login" v-model="login" name="Login"/>
@@ -23,23 +45,25 @@
             <use xlink:href="#arrow"/>
           </svg>
         </button>
-        <div class="register-container">
-          Nie masz jeszcze konta ? 
-          <a href="/register" title="#" class="register shining-button"> 
-            Zarejetruj się!
-          </a>
-        </div>
       </form>
-    </ValidationObserver>
+    </ValidationObserver> -->
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
-import {required} from 'vee-validate/dist/rules';
-import baseUrl from '../modules/url';
+import Vue from 'vue';
+import { extend } from 'vee-validate';
+import { required } from 'vee-validate/dist/rules';
 import { messages } from 'vee-validate/dist/locale/en.json';
+import { Button, Form, FormItem, Input, Checkbox } from 'element-ui';
+import Cookies from 'js-cookie'
+
+Vue.use(Button);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Input);
+Vue.use(Checkbox);
 
 extend('required', {
   ...required,
@@ -48,24 +72,31 @@ extend('required', {
 
 export default {
   name: 'Login',
-  components: {
-    ValidationProvider,
-    ValidationObserver
-  },
+
   data(){
     return{
-      login: "",
-      password: "",
-      save: false
-    }
+      login: '',
+      password: '',
+      save: false,
+      loginForm: {
+        login: '',
+        password: '',
+        saveMe: Cookies.get('saveMe') !== 'false',
+      },
+      rules: {
+        login: [{ required: true, message: this.$t('login.loginRequired'), trigger: 'blur' }],
+        password: [{ required: true, message: this.$t('login.passwordRequired'), trigger: 'blur' }],
+      },
+    };
   },
-  methods:{
-    onSubmit(){
-      this.$refs.loginform.validate().then(success => {
+
+  methods: {
+    onSubmit() {
+      this.$refs.loginForm.validate(success => {
         if (!success) {
           return;
         }
-        axios.post(baseUrl + '/auth/login',
+        this.$axios.post('/auth/login',
           {
             username: this.login,
             password: this.password
@@ -79,13 +110,13 @@ export default {
           this.$store.commit('login', res.data);
           this.$router.push('/');
         })
-        .catch(function(err) {
-          console.log('Zjebalo sie', err);
-        });
-      }) 
-    }
-  }
-}
+      })
+    },
+    changeSaveMeCookie() {
+      Cookies.set('saveMe', this.loginForm.saveMe, { expires: 365 });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -210,6 +241,11 @@ h3{
   font-size: 1.4em;
   margin: 0;
 }
+
+.el-form-item{
+  font-family: 'Montserrat' !important;
+}
+
 
 @media(max-width: 840px){
   .login-form{
