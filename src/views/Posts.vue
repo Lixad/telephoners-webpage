@@ -27,10 +27,9 @@ export default {
   methods:{
   },
   created() {
-    axios.get('/posts/page/' + this.$route.params.page)
+    this.$axios.get('/posts/page/' + this.$route.params.page)
     .then(res => {
       this.posts = res.data;
-      console.log(res.data);
     })
   }
 }

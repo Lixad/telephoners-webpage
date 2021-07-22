@@ -8,76 +8,43 @@
       <el-form-item prop="password" class="w_100">
         <el-input type="password" v-model="loginForm.password" :placeholder="$t('login.password')" />
       </el-form-item>
-      <el-form-item prop="saveMe">
-        <el-checkbox v-model="loginForm.saveMe" @change="changeSaveMeCookie" />
-      </el-form-item>
-       <el-button @click="onSubmit">{{ $t('login.signInButton') }}</el-button>
-    </el-form>
-    <div class="register-container">
-      Nie masz jeszcze konta ? 
-      <a href="/register" title="#" class="register shining-button"> 
-        Zarejetruj się!
-      </a>
-    </div>
-
-
-
-
-    <!-- <ValidationObserver ref="loginform">
-      <form novalidate="true" class="login-form p-b-250" @submit.prevent="onSubmit">
-        <Validation-provider rules="required" v-slot="{ errors }" class="login-form-field">
-          <input type="text" placeholder="Login" v-model="login" name="Login"/>
-          <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
-        </Validation-provider>
-        <Validation-provider rules="required" v-slot="{ errors }" class="login-form-field">
-          <input type="password" placeholder="Hasło" v-model="password" name="Password"/>
-          <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
-        </Validation-provider>
-        <div class="login-form-checkbox">
-          <label for="save">Zapamiętaj mnie
-            <input type="checkbox" id="save" v-model="save"/>
-            <span class="checkmark"></span>
-          </label>
-        </div>
-        <button type="submit" class="shining-button button-login">
-          ZALOGUJ SIĘ
+      <div class="login-form-checkbox">
+        <label for="save">{{ $t('login.rememberMe') }}
+          <input type="checkbox" id="save" v-model="loginForm.saveMe" @change="changeSaveMeCookie"/>
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <button type="submit" class="shining-button button-login" @click.prevent="onSubmit">
+          {{ $t('login.signInButton') }}
           <svg class="arrow">
             <use xlink:href="#arrow"/>
           </svg>
-        </button>
-      </form>
-    </ValidationObserver> -->
+      </button>
+    </el-form>
+    <div class="register-container">
+      {{ $t('login.dontHaveAccount') }}
+      <a href="/register" title="#" class="register shining-button"> 
+        {{ $t('login.register') }}
+      </a>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Vue from 'vue';
-import { extend } from 'vee-validate';
-import { required } from 'vee-validate/dist/rules';
-import { messages } from 'vee-validate/dist/locale/en.json';
-import { Button, Form, FormItem, Input, Checkbox } from 'element-ui';
-import Cookies from 'js-cookie'
+import { Form, FormItem, Input, Checkbox } from 'element-ui';
+import Cookies from 'js-cookie';
 
-Vue.use(Button);
 Vue.use(Form);
 Vue.use(FormItem);
 Vue.use(Input);
 Vue.use(Checkbox);
-
-extend('required', {
-  ...required,
-  message: messages.required
-});
-
 export default {
   name: 'Login',
 
   data(){
     return{
-      login: '',
-      password: '',
-      save: false,
       loginForm: {
         login: '',
         password: '',
@@ -98,8 +65,8 @@ export default {
         }
         this.$axios.post('/auth/login',
           {
-            username: this.login,
-            password: this.password
+            username: this.loginForm.login,
+            password: this.loginForm.password,
           }
         )
         .then((res) => {
@@ -190,7 +157,6 @@ h3{
   width: 0;
 }
 
-
 .checkmark {
     position: absolute;
     top: -3px;
@@ -241,11 +207,6 @@ h3{
   font-size: 1.4em;
   margin: 0;
 }
-
-.el-form-item{
-  font-family: 'Montserrat' !important;
-}
-
 
 @media(max-width: 840px){
   .login-form{

@@ -82,7 +82,7 @@ export default {
         if (!success) {
           return;
         }
-        axios.post('/auth/login',
+        this.$axios.post('/auth/login',
           {
             username: this.login,
             password: this.password

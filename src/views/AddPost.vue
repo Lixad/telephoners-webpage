@@ -1,5 +1,10 @@
 <template>
   <div>
+    <el-form>
+      <el-form-item>
+
+      </el-form-item>
+    </el-form>
     <ValidationObserver ref="addpostform">
       <form novalidate="true" class="addpost-form p-b-250" @submit.prevent="onSubmit">
         <Validation-provider rules="required" v-slot="{ errors }" class="addpost-form-field">
@@ -40,6 +45,7 @@
 import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
 import {required, image} from 'vee-validate/dist/rules';
 import { messages } from 'vee-validate/dist/locale/en.json';
+import Cookies from 'js-cookie';
 
 extend('required', {
   ...required,
@@ -89,13 +95,16 @@ export default {
           return;
         }
         const data = new FormData();
+        data.append('Post', `{ "postName": "${this.postTitle}" ,"topic": "${this.topic}", "content": "${this.content}"}`);
         data.append('mainfile', this.mainfile);
-        data.append('Post','{"content": "' + this.content + '","postName": "' + this.postTitle + '","topic": "' + this.topic + '"}');
-        const arrayKey = `galleryfiles`;
+        const arrayKey = 'galleryfiles';
         this.galleryfiles.forEach(v => {
             data.append(arrayKey, v);
         });
-        axios.post('/posts/addpost',
+        for (var value of data.values()) {
+          console.log(value);
+        }
+        this.$axios.post('/posts/addpost',
           data,
           {
             headers: {

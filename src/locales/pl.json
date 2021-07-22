@@ -1,10 +1,33 @@
 {
-  "login" : {
-      "login": "Login",
-      "password": "Hasło",
-      "signIn": "Logowanie",
-      "loginRequired": "Pole login jest wymagane",
-      "passwordRequired": "Pole hasło jest wymagane",
-      "signInButton": "ZALOGUJ SIĘ"
+  "login": {
+    "login": "Login",
+    "password": "Hasło",
+    "signIn": "Logowanie",
+    "loginRequired": "Pole login jest wymagane",
+    "passwordRequired": "Pole hasło jest wymagane",
+    "signInButton": "ZALOGUJ SIĘ",
+    "rememberMe": "Zapamiętaj mnie",
+    "dontHaveAccount": "Nie masz jeszcze konta?",
+    "register": "Zarejestruj się!"
+  },
+  "register": {
+    "signUp": "Rejestracja",
+    "confirmPassword": "Powtórz hasło",
+    "login": "Login",
+    "password": "Hasło",
+    "email": "Email",
+    "name": "Imię",
+    "surname": "Nazwisko",
+    "register": "Zarejestruj się",
+    "haveAccount": "Masz już konto?",
+    "signIn": "Zaloguj się!",
+    "passwordLen": "Hasło musi być dłuższe niż 4 znaki",
+    "loginLen": "Login musi zawierać co najmniej 4 znaki",
+    "validEmailFormat": "Nieprawidłowy adres email",
+    "emailRequired": "Pole email jest wymagane",
+    "nameRequired": "Pole imię jest wymagane",
+    "surnameRequired": "Pole nazwisko jest wymagane",
+    "loginLenMax": "Login musi być krótszy niż 16 znaków",
+    "passwordMatch": "Hasła nie są takie same"
   }
 }

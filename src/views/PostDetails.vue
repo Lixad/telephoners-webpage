@@ -25,7 +25,7 @@ import Post from '../components/Post';
 export default {
     name: 'PostDetails',
     components: {
-        Post
+        Post,
     },
     data(){
         return{
@@ -33,7 +33,7 @@ export default {
         }
     },
     created(){
-        axios.get('/posts/' + this.$route.params.id)
+        this.$axios.get('/posts/' + this.$route.params.id)
         .then(res => {
             console.log(res);
             this.post = res.data;

@@ -1,110 +1,96 @@
 <template>
   <div>
-    <h3>Rejestracja</h3>
-    <ValidationObserver ref="registerform">
-    <form novalidate="true" class="login-form p-b-250" @submit.prevent="onSubmit">
-      <Validation-provider rules="required|alpha_dash|min:4|max:16" v-slot="{ errors }" class="login-form-field">
-        <input type="text" placeholder="Login" v-model="login" name="Login"/>
-        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
-      </Validation-provider>
-      <Validation-provider rules="confirmed:password2|required|min:4" vid="password" v-slot="{ errors }" class="login-form-field">
-        <input type="password" placeholder="Hasło" v-model="password" name="Password"/>
-        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
-      </Validation-provider>
-      <Validation-provider rules="confirmed:password|required" vid="password2" v-slot="{ errors }" class="login-form-field">
-        <input type="password" placeholder="Powtórz hasło" v-model="password2" name="Confirm password"/>
-        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
-      </Validation-provider>
-      <Validation-provider rules="required|email" v-slot="{ errors }" class="login-form-field">
-        <input type="text" placeholder="Email" v-model="email" name="Email"/>
-        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
-      </Validation-provider>
-      <Validation-provider rules="required|alpha" v-slot="{ errors }" class="login-form-field">
-        <input type="text" placeholder="Imię" v-model="name" name="Name"/>
-        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
-      </Validation-provider>
-      <Validation-provider rules="required|alpha" v-slot="{ errors }" class="login-form-field">
-        <input type="text" placeholder="Nazwisko" v-model="surname" name="Surname"/>
-        <span class="error-msg" :class="{'p-b-1_15em' : !errors[0]}">{{ errors[0] }}</span>
-      </Validation-provider>
-      <button type="submit" class="shining-button button-login">
-        ZAREJESTRUJ SIĘ
-      </button>
-      <div class="login-container">
-        Masz już konto ? 
-        <a href="/login" title="#" class="login shining-button"> 
-          Zaloguj się!
-        </a>
-      </div>
-    </form>
-    </ValidationObserver>
+    <h3>{{ $t('register.signUp') }}</h3>
+      <el-form ref="registerForm" :model="registerForm" :rules="rules" class="login-form">
+        <el-form-item prop="login" class="w_100">
+          <el-input v-model="registerForm.login" :placeholder="$t('register.login')" />
+        </el-form-item>
+        <el-form-item prop="password" class="w_100">
+          <el-input type="password" v-model="registerForm.password" :placeholder="$t('register.password')" />
+        </el-form-item>
+        <el-form-item prop="password2" class="w_100">
+          <el-input type="password" v-model="registerForm.password2" :placeholder="$t('register.confirmPassword')" />
+        </el-form-item>
+        <el-form-item prop="email" class="w_100">
+          <el-input v-model="registerForm.email" :placeholder="$t('register.email')" />
+        </el-form-item>
+        <el-form-item prop="name" class="w_100">
+          <el-input v-model="registerForm.name" :placeholder="$t('register.name')" />
+        </el-form-item>
+        <el-form-item prop="surname" class="w_100">
+          <el-input v-model="registerForm.surname" :placeholder="$t('register.surname')" />
+        </el-form-item>
+        <button type="submit" @click.prevent="onSubmit" class="shining-button button-login">
+          {{ $t('register.register') }}
+        </button>
+        <div class="login-container">
+          {{ $t('register.haveAccount') }}
+          <a href="/login" title="#" class="login shining-button"> 
+            {{ $t('register.signIn') }}
+          </a>
+        </div>
+      </el-form>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
-import {required, email, confirmed, alpha, alpha_dash, min, max} from 'vee-validate/dist/rules';
-import { messages } from 'vee-validate/dist/locale/en.json';
+import Vue from 'vue';
+import { Form, FormItem, Input, Checkbox } from 'element-ui';
 
-extend('required',{ 
-  ...required,
-  message: messages.required
-});
-extend('email',{ 
-  ...email,
-  message: messages.email
-});
-extend('confirmed',{
-  ...confirmed,
-  message: messages.confirmed
-});
-extend('alpha',{
-  ...alpha,
-  message: messages.alpha
-});
-extend('alpha_dash',{
-  ...alpha_dash,
-  message: messages.alpha_dash
-});
-extend('min',{
-  ...min,
-  message: messages.min
-});
-extend('max',{
-  ...max,
-  message: messages.max
-});
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Input);
+Vue.use(Checkbox);
 
 export default {
   name: 'Register',
-  components: {
-    ValidationProvider,
-    ValidationObserver
-  },
+
   data(){
+    const checkPassword = (rule, value, callback) => {
+      if(this.registerForm.password !== value) {
+        return callback(new Error(this.$t('register.passwordMatch')))
+      } else {
+        return callback();
+      }
+    }
     return{
-      name: "",
-      surname: "",
-      login: "",
-      email: "",
-      password: "",
-      password2: ""
+      registerForm: {
+        login: '',
+        password: '',
+        password2: '',
+        email: '',
+        name: '',
+        surname: '',
+      },
+      rules: {
+        login: [{ required: true, message: this.$t('login.loginRequired'), trigger: 'blur' },
+                { min: 4, message: this.$t('register.loginLen'), trigger: 'blur'},
+                { max: 16, message: this.$t('register.loginLenMax'), trigger: 'blur'}],
+        password: [{ required: true, message: this.$t('login.passwordRequired'), trigger: 'blur' },
+                   { min: 4, message: this.$t('register.passwordLen'), trigger: 'blur'}],
+        password2: [{ required: true, message: this.$t('login.passwordRequired'), trigger: 'blur' },
+                    { validator: checkPassword, trigger: 'blur' }],
+        email: [{ type: 'email', message: this.$t('register.validEmailFormat'), trigger: 'blur' },
+                { required: true, message: this.$t('register.emailRequired'), trigger: 'blur' }],
+        name: [{ required: true, message: this.$t('register.nameRequired'), trigger: 'blur' }],
+        surname: [{ required: true, message: this.$t('register.surnameRequired'), trigger: 'blur' }]
+      },
     }
   },
   methods:{
     onSubmit() {
-      this.$refs.registerform.validate().then(success => {
+      this.$refs.registerForm.validate(success => {
         if (!success) {
           return;
         }
-        axios.post('/auth/register',
+        this.$axios.post('/auth/register',
           {
-            username: this.login,
-            password: this.password,
-            name: this.name,
-            surname: this.surname,
-            email: this.email
+            username: this.registerForm.login,
+            password: this.registerForm.password,
+            name: this.registerForm.name,
+            surname: this.registerForm.surname,
+            email: this.registerForm.email
           }
         )
         .then(res => {
@@ -168,7 +154,6 @@ h3{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   font-size: 3em;
   background-color: transparent;
   border: none;

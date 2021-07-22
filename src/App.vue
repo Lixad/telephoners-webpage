@@ -51,6 +51,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1.25;
   padding-top: 100px;
+  font-family: 'Montserrat';
 }
 ol, ul {
 	list-style: none;
@@ -71,7 +72,13 @@ table {
 button{
   border: none;
   border-radius: none;
+  font-family: 'Montserrat';
   background-color: transparent;
+}
+
+input {
+  font-family: 'Montserrat';
+  cursor: inherit;
 }
 
 a{
@@ -84,6 +91,13 @@ html{
   font-weight: 400;
   color: #ffffff;
   background-color: #052431;
+}
+
+.el-input .el-input__inner {
+  font-size: 24px;
+  padding: 5px 10px;
+  height: auto;
+  border-radius: 0;
 }
 
 @font-face{

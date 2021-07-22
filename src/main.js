@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-import './CustomScss.scss'
+import 'element-theme-default';
 import i18n from './plugins/i18n'
 
 axios.defaults.baseURL = 'https://telephonersnew.ew.r.appspot.com';

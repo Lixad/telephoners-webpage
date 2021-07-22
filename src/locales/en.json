@@ -1,10 +1,33 @@
 {
-    "login" : {
-        "login": "Login",
-        "password": "password",
-        "signIn": "Sign In",
-        "loginRequired": "Login is required",
-        "passwordRequired": "Password is required",
-        "signInButton": "SIGN IN"
-    }
+  "login": {
+    "login": "Login",
+    "password": "Password",
+    "signIn": "Sign In",
+    "loginRequired": "Login is required",
+    "passwordRequired": "Password is required",
+    "signInButton": "SIGN IN",
+    "rememberMe": "Remember me",
+    "dontHaveAccount": "Do not have account yet?",
+    "register": "Sign Up!"
+  },
+  "register": {
+    "signUp": "Sign Up",
+    "confirmPassword": "Confirm password",
+    "login": "Login",
+    "password": "Password",
+    "email": "Email",
+    "name": "Name",
+    "surname": "Surname",
+    "register": "Sign Up",
+    "haveAccount": "Have account already?",
+    "signIn": "Sign In!",
+    "passwordLen": "Password has to be longer than 4 characters",
+    "loginLen": "Login has to be longer than 4 characters",
+    "validEmailFormat": "Invalid email format",
+    "emailRequired": "Email is required",
+    "nameRequired": "Name is required",
+    "surnameRequired": "Surname is required",
+    "loginLenMax": "Login has to be shorter than 16 characters",
+    "passwordMatch": "Passwords do not match"
+  }
 }
