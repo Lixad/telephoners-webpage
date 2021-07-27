@@ -7,6 +7,12 @@ import 'element-theme-default';
 import i18n from './plugins/i18n'
 
 axios.defaults.baseURL = 'https://telephonersnew.ew.r.appspot.com';
+axios.defaults.withCredentials = true;
+axios.defaults.crossDomain = true;
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = 'http://localhost:8000/';
+axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,PATCH,OPTIONS';
+axios.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true';
+axios.defaults.headers.common['Access-Control-Allow-Headers'] = '*';
 
 axios.interceptors.request.use(config => {
     config.headers.Authorization = 'Bearer ' + store.state.token;

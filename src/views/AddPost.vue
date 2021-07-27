@@ -45,7 +45,6 @@
 import {ValidationProvider, ValidationObserver, extend} from 'vee-validate';
 import {required, image} from 'vee-validate/dist/rules';
 import { messages } from 'vee-validate/dist/locale/en.json';
-import Cookies from 'js-cookie';
 
 extend('required', {
   ...required,
@@ -107,9 +106,9 @@ export default {
         this.$axios.post('/posts/addpost',
           data,
           {
-            headers: {
+            headers : {
               'Content-Type': 'multipart/form-data',
-            }
+            },
           }
         )
         .then((res) => {
@@ -117,7 +116,7 @@ export default {
             console.log('Looks like there was a problem. Status Code: ' + res);
             return;
           }
-          this.$router.push('/posts/0');
+          this.$router.push('/posts/page/0');
         })
       }) 
     }
